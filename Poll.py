@@ -1,7 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
-from tkinter import simpledialog  # Import simpledialog
 from PIL import Image, ImageTk
 import pandas as pd
 import os
@@ -23,7 +22,7 @@ class PollApp:
 
     def get_participant_name(self):
         # Create a simple dialog to input the participant's name
-        participant_name = simpledialog.askstring("Participant's Name", "Please enter your name:")
+        participant_name = tk.simpledialog.askstring("Participant's Name", "Please enter your name:")
         if participant_name is None:
             participant_name = "N/A"  # Set a default name if none is provided
         return participant_name
@@ -72,7 +71,10 @@ class PollApp:
         image_name = self.image_paths[self.current_image_index - 1] if self.current_image_index > 0 else "N/A"
         image_name = os.path.basename(image_name)
         self.responses.append((self.participant_name, image_name, response))
-        self.df = self.df.append({"Participant Name": self.participant_name, "Image": image_name, "Response": response}, ignore_index=True)
+        new_df = pd.DataFrame({"Participant Name": [self.participant_name],
+                               "Image": [image_name],
+                               "Response": [response]})
+        self.df = pd.concat([self.df, new_df], ignore_index=True)
         self.df.to_csv(self.csv_filename, index=False)  # Append to or create the CSV file
         self.show_next_image()
 
