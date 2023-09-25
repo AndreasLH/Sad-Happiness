@@ -4,6 +4,8 @@ from tkinter import filedialog
 from PIL import Image, ImageTk
 import pandas as pd
 import os
+from ctypes import windll
+windll.shcore.SetProcessDpiAwareness(1)
 
 class PollApp:
     def __init__(self, root):
