@@ -4,8 +4,10 @@ from tkinter import filedialog
 from PIL import Image, ImageTk
 import pandas as pd
 import os
-from ctypes import windll
-windll.shcore.SetProcessDpiAwareness(1)
+import platform
+if platform.system() == 'Windows':
+    from ctypes import windll
+    windll.shcore.SetProcessDpiAwareness(1)
 import random  # Import the random module
 
 class PollApp:
