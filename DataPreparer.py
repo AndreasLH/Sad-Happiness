@@ -11,22 +11,22 @@ def find_S_images(path):
             files.append(name)
     return files
 
-def copy_images(new_path, file_paths):
+def copy_images(new_path, file_paths, generate_pca=False):
     if not os.path.exists(new_path):
         os.makedirs(new_path)
     print("Copying images...")  
     for src in tqdm(file_paths):
         shutil.copyfile(src, new_path+os.path.basename(src)) # Copy original image for presentation
-        
-        img_rgb = cv2.imread(src) # Save another copy for PCA analysis
-        img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY) # Convert copy to grayscale
-        scale_percent = 50 # percent of original size
-        width = int(img_gray.shape[1] * scale_percent / 100)
-        height = int(img_gray.shape[0] * scale_percent / 100)
-        dim = (width, height)
-        img_reduced = cv2.resize(img_gray, dim, interpolation = cv2.INTER_AREA) # Reduce image size by half
-        
-        cv2.imwrite(new_path+os.path.basename(src)[:-4]+"_pca.JPG", img_reduced)
+        if generate_pca:
+            img_rgb = cv2.imread(src) # Save another copy for PCA analysis
+            img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY) # Convert copy to grayscale
+            scale_percent = 50 # percent of original size
+            width = int(img_gray.shape[1] * scale_percent / 100)
+            height = int(img_gray.shape[0] * scale_percent / 100)
+            dim = (width, height)
+            img_reduced = cv2.resize(img_gray, dim, interpolation = cv2.INTER_AREA) # Reduce image size by half
+
+            cv2.imwrite(new_path+os.path.basename(src)[:-4]+"_pca.JPG", img_reduced)
         
         
 def prune_images(new_path):
@@ -57,7 +57,10 @@ def prune_images(new_path):
     for file in tqdm(os.listdir(new_path)):
         if file in to_remove:
             os.remove(os.path.join(new_path, file))
-            os.remove(os.path.join(new_path, file[:-4]+"_pca.JPG"))
+            try:
+                os.remove(os.path.join(new_path, file[:-4]+"_pca.JPG"))
+            except:
+                continue
     
 if __name__ == "__main__":
     path = os.getcwd() + os.sep + "KDEF_and_AKDEF"+ os.sep + "KDEF"
