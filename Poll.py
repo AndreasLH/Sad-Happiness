@@ -39,9 +39,6 @@ class PollApp:
         random.shuffle(self.image_paths)
         self.images = [Image.open(path).resize((450, 610)) for path in self.image_paths]
 
-    # ... (rest of the code remains the same)
-
-
     def create_interface(self):
         self.image_label = ttk.Label(self.root)
         self.image_label.pack(padx=20, pady=20)
@@ -65,7 +62,9 @@ class PollApp:
         option_2_button.pack(side="left", padx=10)
 
         # Bind the Enter key to "0"
-        self.root.bind("<Return>", lambda event=None: self.record_response("0")) # Return to neutral
+
+        self.root.bind("<Return>", lambda event=None: self.record_response("0"))
+
         self.root.bind("1", lambda event=None: self.record_response("-2"))
         self.root.bind("2", lambda event=None: self.record_response("-1"))
         self.root.bind("3", lambda event=None: self.record_response("0"))
