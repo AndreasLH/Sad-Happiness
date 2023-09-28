@@ -4,6 +4,9 @@ from tkinter import filedialog
 from PIL import Image, ImageTk
 import pandas as pd
 import os
+from ctypes import windll
+windll.shcore.SetProcessDpiAwareness(1)
+import random  # Import the random module
 
 class PollApp:
     def __init__(self, root):
@@ -30,6 +33,8 @@ class PollApp:
     def load_images(self):
         # Load images from KDEF_Straight folder
         self.image_paths = [os.getcwd() + os.sep + "KDEF_Straight" + os.sep + filename for filename in os.listdir("KDEF_Straight")]
+        # Shuffle the image_paths list
+        random.shuffle(self.image_paths)
         self.images = [Image.open(path).resize((450, 610)) for path in self.image_paths]
 
     def create_interface(self):
@@ -55,7 +60,9 @@ class PollApp:
         option_2_button.pack(side="left", padx=10)
 
         # Bind the Enter key to "0"
+
         self.root.bind("<Return>", lambda event=None: self.record_response("0"))
+
         self.root.bind("1", lambda event=None: self.record_response("-2"))
         self.root.bind("2", lambda event=None: self.record_response("-1"))
         self.root.bind("3", lambda event=None: self.record_response("0"))
