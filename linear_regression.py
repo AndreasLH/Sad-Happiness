@@ -13,12 +13,13 @@ poll_responses = pd.read_csv("poll_responses.csv")
 # Find Respons for all images with same image id and take the mean
 ratings = poll_responses.groupby("Image").mean()["Response"].values
 
-n_features = 10
+n_features = 25
 model = sklearn.linear_model.LinearRegression()
 
 print("Performing forward selection...")
-forward_selection = sklearn.feature_selection.SequentialFeatureSelector(model, n_features_to_select=n_features)
+forward_selection = sklearn.feature_selection.SequentialFeatureSelector(model, n_features_to_select=n_features,tol=0.01,n_jobs=-1)
 selected_features = forward_selection.fit(PCs,ratings).get_support()
+print('number of selected features:',sum(selected_features))
 
 model = model.fit(PCs[:, selected_features], ratings)
 
