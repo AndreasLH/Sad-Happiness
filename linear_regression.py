@@ -11,9 +11,9 @@ PCs = np.load("PCs.npy")
 # Load ratings
 poll_responses = pd.read_csv("poll_responses.csv")
 # Find Respons for all images with same image id and take the mean
-ratings = poll_responses.groupby("Image").mean()["Response"].values
+ratings = poll_responses.groupby("Image")["Response"].mean()
 
-n_features = 10
+n_features = 60
 model = sklearn.linear_model.LinearRegression()
 
 print("Performing forward selection...")
