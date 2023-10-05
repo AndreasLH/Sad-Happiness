@@ -1,14 +1,24 @@
 import numpy as np
-from matplotlib import pyplot as plt
+import pandas as pd
 np.random.seed(21)
-import pickle as pkl
+import sklearn.linear_model
+import matplotlib.pyplot as plt
 
-# Load model
-with open("linear_regression_model.pkl", "rb") as f:
-    model = pkl.load(f)
+# Alternative method without forward selection
+# Change the following
+first_component_to_use = 3
+last_component_to_use = 17
+alpha_scaling = 0.2
 
-print('Generating images...')
-# Generating images
+
+
+
+
+
+
+
+
+# Do not change this
 def generate_images(model,ratings):
     """
     Generates an image based on the ratings provided.
@@ -29,48 +39,33 @@ def generate_images(model,ratings):
         generated_images.append((x0-intercept) * scaling)
     return generated_images
 
+
+# Linear Regression
+PCs = np.load("PCs.npy")
+PCs = PCs[:,first_component_to_use:last_component_to_use]
+# Load ratings
+poll_responses = pd.read_csv("poll_responses.csv")
+# Find Respons for all images with same image id and take the mean
+ratings = poll_responses.groupby("Image").mean()["Response"].values
+
+model = sklearn.linear_model.LinearRegression()
+model = model.fit(PCs, ratings)
+
+# Generating images
 ratings_generate = [-10,-2,-1,0,1,2,10]
 synthetic_images = generate_images(model,ratings_generate)
 
 components = np.load("components.npy")
-selected_features = np.load("selected_features.npy")
-selected_features = np.concatenate((selected_features,np.zeros(933-len(selected_features),dtype=bool)))
-loading_matrix = components[selected_features,:]
+loading_matrix = components[first_component_to_use:last_component_to_use,:]
 mean_image = np.load("mean.npy")
 
 im_size = (254,187)
 
 plt.figure(figsize=(20, 10))
 for i in range(len(synthetic_images)):
-    image = synthetic_images[i]@loading_matrix * 0.2 + mean_image
+    image = synthetic_images[i]@loading_matrix * alpha_scaling + mean_image
     plt.subplot(1, len(synthetic_images), i+1)
     plt.imshow(image.reshape(im_size), cmap="gray")
     plt.title(ratings_generate[i])
     plt.axis("off")
 plt.show()
-
-
-
- # Visualize part 5
-n_components = 10
-plt.figure(figsize=(15, 5))
-for i in range(n_components):
-    plt.subplot(3, n_components, i + 1)
-    plt.imshow(loading_matrix[i].reshape(im_size), cmap='gray')
-    plt.title(f'PC {i + 1}')
-    plt.axis('off')
-plt.tight_layout()
-plt.show()
-
-
-
-""" 2.4
-tmp = np.linalg.pinv(PCs)@ratings
-weights = tmp[:-1]
-intercept = tmp[-1]
-scaling = weights/np.linalg.norm(weights)**2
-tmp = (0-intercept) * scaling
-plt.imshow(tmp.reshape(x,y), cmap="gray")
-plt.axis("off")
-plt.show()
-"""
