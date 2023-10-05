@@ -32,15 +32,23 @@ def generate_images(model,ratings):
 ratings_generate = [-4,-2,-1,0,1,2,4]
 synthetic_images = generate_images(model,ratings_generate)
 
+components = np.load("components.npy")
+selected_features = np.load("selected_features.npy")
+loading_matrix = components[selected_features,:]
+print(loading_matrix.shape)
+
 plt.figure(figsize=(20, 10))
 for i in range(len(synthetic_images)):
+    image = synthetic_images[i]@loading_matrix
     plt.subplot(1, len(synthetic_images), i+1)
-    plt.imshow(synthetic_images[i], cmap="gray")
+    plt.imshow(image.reshape(254,187), cmap="gray")
     plt.title(ratings_generate[i])
     plt.axis("off")
 plt.show()
 
-"""
+
+
+""" 2.4
 tmp = np.linalg.pinv(PCs)@ratings
 weights = tmp[:-1]
 intercept = tmp[-1]

@@ -22,6 +22,8 @@ selected_features = forward_selection.fit(PCs,ratings).get_support()
 
 model = model.fit(PCs[:, selected_features], ratings)
 
+# Save selected features
+np.save("selected_features.npy", selected_features)
 # Save model
 with open("linear_regression_model.pkl", "wb") as f:
     pkl.dump(model, f)
