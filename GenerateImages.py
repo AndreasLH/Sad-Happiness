@@ -36,10 +36,11 @@ plt.figure(figsize=(20, 10))
 for i in range(len(synthetic_images)):
     plt.subplot(1, len(synthetic_images), i+1)
     plt.imshow(synthetic_images[i], cmap="gray")
-    plt.title(ratings[i])
+    plt.title(ratings_generate[i])
     plt.axis("off")
 plt.show()
 
+"""
 tmp = np.linalg.pinv(PCs)@ratings
 weights = tmp[:-1]
 intercept = tmp[-1]
@@ -48,4 +49,4 @@ tmp = (0-intercept) * scaling
 plt.imshow(tmp.reshape(x,y), cmap="gray")
 plt.axis("off")
 plt.show()
-
+"""
