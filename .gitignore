@@ -1,5 +1,6 @@
 KDEF_and_AKDEF/
 KDEF_Straight/
+components.npy
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
