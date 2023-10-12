@@ -11,13 +11,6 @@ last_component_to_use = 17
 alpha_scaling = 0.2
 
 
-
-
-
-
-
-
-
 # Do not change this
 def generate_images(model,ratings):
     """
@@ -46,7 +39,7 @@ PCs = PCs[:,first_component_to_use:last_component_to_use]
 # Load ratings
 poll_responses = pd.read_csv("poll_responses.csv")
 # Find Respons for all images with same image id and take the mean
-ratings = poll_responses.groupby("Image").mean()["Response"].values
+ratings = poll_responses.groupby("Image")["Response"].mean()
 
 model = sklearn.linear_model.LinearRegression()
 model = model.fit(PCs, ratings)
