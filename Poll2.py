@@ -57,7 +57,9 @@ class PollApp:
 
         # Bind the Enter key to "0"
         self.root.bind("d", lambda event=None: self.record_response("0"))
+        self.root.bind("f", lambda event=None: self.record_response("0"))
         self.root.bind("k", lambda event=None: self.record_response("1"))
+        self.root.bind("j", lambda event=None: self.record_response("1"))
 
         self.show_next_image()
 
