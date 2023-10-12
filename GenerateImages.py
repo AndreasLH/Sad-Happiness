@@ -1,8 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
-np.random.seed(21)
 import pickle as pkl
-
+import os
+np.random.seed(23)
 # Load model
 with open("linear_regression_model.pkl", "rb") as f:
     model = pkl.load(f)
@@ -28,8 +28,8 @@ def generate_images(model,ratings):
     for x0 in ratings:
         generated_images.append((x0-intercept) * scaling)
     return generated_images
-
-ratings_generate = [-10,-2,-1,0,1,2,10]
+'''
+ratings_generate = [-3,-2,-1,0,1,2,3]
 synthetic_images = generate_images(model,ratings_generate)
 
 components = np.load("components.npy")
@@ -47,7 +47,7 @@ for i in range(len(synthetic_images)):
     plt.imshow(image.reshape(im_size), cmap="gray")
     plt.title(ratings_generate[i])
     plt.axis("off")
-plt.show()
+#plt.show()
 
 
 
@@ -60,11 +60,11 @@ for i in range(n_components):
     plt.title(f'PC {i + 1}')
     plt.axis('off')
 plt.tight_layout()
-plt.show()
+#plt.show()
 
 
 
-""" 2.4
+# 2.4
 tmp = np.linalg.pinv(PCs)@ratings
 weights = tmp[:-1]
 intercept = tmp[-1]
@@ -73,4 +73,36 @@ tmp = (0-intercept) * scaling
 plt.imshow(tmp.reshape(x,y), cmap="gray")
 plt.axis("off")
 plt.show()
-"""
+'''
+def generate_dataset(scale_factor=0.2):
+    # generate folders if not there
+    if not os.path.exists("dataset2/"):
+        os.makedirs("dataset2/")
+        print("dataset2 folder created")
+        
+    # generate the images
+    ratings_generate = [-3,-2,-1,0,1,2,3]
+    synthetic_images = generate_images(model,ratings_generate)
+
+    # prepare the model
+    components = np.load("components.npy")
+    selected_features = np.load("selected_features.npy")
+    selected_features = np.concatenate((selected_features,np.zeros(933-len(selected_features),dtype=bool)))
+    loading_matrix = components[selected_features,:]
+    mean_image = np.load("mean.npy")
+    print("Model loaded")
+    
+    # save the images
+    print("Saving images...")
+    im_size = (254,187)
+    for i in range(len(synthetic_images)):
+        plt.figure(figsize=(im_size[1]*3/im_size[0], im_size[0]*3/im_size[0]), )
+        image = synthetic_images[i]@loading_matrix * scale_factor + mean_image
+        plt.imshow(image.reshape(im_size), cmap="gray")
+        #plt.title(ratings_generate[i])
+        plt.axis("off")
+        plt.tight_layout()
+        plt.savefig(f"dataset2/image_{i-3}.png")
+                    
+if __name__ == "__main__":
+    generate_dataset()
