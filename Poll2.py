@@ -49,11 +49,11 @@ class PollApp:
         self.response_var = tk.StringVar()
         self.response_var.set("")  # Initialize as empty
 
-        option_happy_button = ttk.Button(self.root, text="happy", command=lambda: self.record_response("1"))
         option_nothappy_button = ttk.Button(self.root, text="not happy", command=lambda: self.record_response("0"))
+        option_happy_button = ttk.Button(self.root, text="happy", command=lambda: self.record_response("1"))
 
-        option_happy_button.pack(side="left", padx=10)
         option_nothappy_button.pack(side="left", padx=10)
+        option_happy_button.pack(side="right", padx=10)
 
         # Bind the Enter key to "0"
         self.root.bind("d", lambda event=None: self.record_response("0"))
