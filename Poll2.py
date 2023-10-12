@@ -34,7 +34,7 @@ class PollApp:
 
     def load_images(self):
         # Load images from KDEF_Straight folder
-        self.image_paths = 40*[os.getcwd() + os.sep + "Experiment2" + os.sep + filename for filename in os.listdir("Experiment2")]
+        self.image_paths = 40*[os.getcwd() + os.sep + "dataset2" + os.sep + filename for filename in os.listdir("dataset2")]
         # Shuffle the image_paths list
         random.shuffle(self.image_paths)
         self.images = [Image.open(path).resize((450, 610)) for path in self.image_paths]
