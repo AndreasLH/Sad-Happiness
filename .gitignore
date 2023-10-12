@@ -1,7 +1,9 @@
 KDEF_and_AKDEF/
 KDEF_Straight/
+dataset2/
 PCs.npy
 components.npy
+mean.npy
 .DS_Store
 # Byte-compiled / optimized / DLL files
 __pycache__/
