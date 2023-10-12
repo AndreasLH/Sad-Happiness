@@ -34,7 +34,7 @@ class PollApp:
 
     def load_images(self):
         # Load images from KDEF_Straight folder
-        self.image_paths = 20*[os.getcwd() + os.sep + "KDEF_Straight" + os.sep + "Generated_Images" + os.sep+ filename for filename in os.listdir("KDEF_Straight")]
+        self.image_paths = 40*[os.getcwd() + os.sep + "Experiment2" + os.sep + filename for filename in os.listdir("Experiment2")]
         # Shuffle the image_paths list
         random.shuffle(self.image_paths)
         self.images = [Image.open(path).resize((450, 610)) for path in self.image_paths]
@@ -49,30 +49,20 @@ class PollApp:
         self.response_var = tk.StringVar()
         self.response_var.set("")  # Initialize as empty
 
-        option_minus_2_button = ttk.Button(self.root, text="-2", command=lambda: self.record_response("-2"))
-        option_minus_1_button = ttk.Button(self.root, text="-1", command=lambda: self.record_response("-1"))
-        option_0_button = ttk.Button(self.root, text="0", command=lambda: self.record_response("0"))
-        option_1_button = ttk.Button(self.root, text="1", command=lambda: self.record_response("1"))
-        option_2_button = ttk.Button(self.root, text="2", command=lambda: self.record_response("2"))
+        option_happy_button = ttk.Button(self.root, text="happy", command=lambda: self.record_response("1"))
+        option_nothappy_button = ttk.Button(self.root, text="not happy", command=lambda: self.record_response("0"))
 
-        option_minus_2_button.pack(side="left", padx=10)
-        option_minus_1_button.pack(side="left", padx=10)
-        option_0_button.pack(side="left", padx=10)
-        option_1_button.pack(side="left", padx=10)
-        option_2_button.pack(side="left", padx=10)
+        option_happy_button.pack(side="left", padx=10)
+        option_nothappy_button.pack(side="left", padx=10)
 
         # Bind the Enter key to "0"
-        self.root.bind("<Return>", lambda event=None: self.record_response("0")) # Return to neutral
-        self.root.bind("1", lambda event=None: self.record_response("-2"))
-        self.root.bind("2", lambda event=None: self.record_response("-1"))
-        self.root.bind("3", lambda event=None: self.record_response("0"))
-        self.root.bind("4", lambda event=None: self.record_response("1"))
-        self.root.bind("5", lambda event=None: self.record_response("2"))
+        self.root.bind("d", lambda event=None: self.record_response("0"))
+        self.root.bind("k", lambda event=None: self.record_response("1"))
 
         self.show_next_image()
 
     def create_dataframe(self):
-        self.csv_filename = "poll_responses.csv"
+        self.csv_filename = "poll_responses2.csv"
         # Create a new DataFrame or load an existing one if the file already exists
         if os.path.exists(self.csv_filename):
             self.df = pd.read_csv(self.csv_filename)
