@@ -2,3 +2,4 @@ numpy
 scipy
 scikit-learn
 matplotlib
+pandas=>2.0.0

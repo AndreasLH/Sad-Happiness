@@ -34,7 +34,7 @@ class PollApp:
 
     def load_images(self):
         # Load images from KDEF_Straight folder
-        self.image_paths = 40*[os.getcwd() + os.sep + "Experiment2" + os.sep + filename for filename in os.listdir("Experiment2")]
+        self.image_paths = 40*[os.getcwd() + os.sep + "dataset2" + os.sep + filename for filename in os.listdir("dataset2")]
         # Shuffle the image_paths list
         random.shuffle(self.image_paths)
         self.images = [Image.open(path).resize((450, 610)) for path in self.image_paths]
@@ -49,11 +49,11 @@ class PollApp:
         self.response_var = tk.StringVar()
         self.response_var.set("")  # Initialize as empty
 
-        option_happy_button = ttk.Button(self.root, text="happy", command=lambda: self.record_response("1"))
         option_nothappy_button = ttk.Button(self.root, text="not happy", command=lambda: self.record_response("0"))
+        option_happy_button = ttk.Button(self.root, text="happy", command=lambda: self.record_response("1"))
 
-        option_happy_button.pack(side="left", padx=10)
         option_nothappy_button.pack(side="left", padx=10)
+        option_happy_button.pack(side="right", padx=10)
 
         # Bind the Enter key to "0"
         self.root.bind("d", lambda event=None: self.record_response("0"))
