@@ -2,6 +2,7 @@ KDEF_and_AKDEF/
 KDEF_Straight/
 PCs.npy
 components.npy
+.DS_Store
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
