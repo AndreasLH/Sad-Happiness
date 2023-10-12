@@ -49,17 +49,33 @@ class PollApp:
         self.response_var = tk.StringVar()
         self.response_var.set("")  # Initialize as empty
 
-        option_nothappy_button = ttk.Button(self.root, text="not happy", command=lambda: self.record_response("0"))
-        option_happy_button = ttk.Button(self.root, text="happy", command=lambda: self.record_response("1"))
+        option_minus_3_button = ttk.Button(self.root, text="-3", command=lambda: self.record_response("-3"))
+        option_minus_2_button = ttk.Button(self.root, text="-2", command=lambda: self.record_response("-2"))
+        option_minus_1_button = ttk.Button(self.root, text="-1", command=lambda: self.record_response("-1"))
+        option_0_button = ttk.Button(self.root, text="0", command=lambda: self.record_response("0"))
+        option_1_button = ttk.Button(self.root, text="1", command=lambda: self.record_response("1"))
+        option_2_button = ttk.Button(self.root, text="2", command=lambda: self.record_response("2"))
+        option_3_button = ttk.Button(self.root, text="3", command=lambda: self.record_response("3"))
 
-        option_nothappy_button.pack(side="left", padx=10)
-        option_happy_button.pack(side="right", padx=10)
+        option_minus_3_button.pack(side="left", padx=10)
+        option_minus_2_button.pack(side="left", padx=10)
+        option_minus_1_button.pack(side="left", padx=10)
+        option_0_button.pack(side="left", padx=10)
+        option_1_button.pack(side="left", padx=10)
+        option_2_button.pack(side="left", padx=10)
+        option_3_button.pack(side="left", padx=10)
 
         # Bind the Enter key to "0"
-        self.root.bind("d", lambda event=None: self.record_response("0"))
-        self.root.bind("f", lambda event=None: self.record_response("0"))
-        self.root.bind("k", lambda event=None: self.record_response("1"))
-        self.root.bind("j", lambda event=None: self.record_response("1"))
+
+        self.root.bind("<Return>", lambda event=None: self.record_response("0"))
+
+        self.root.bind("1", lambda event=None: self.record_response("-3"))
+        self.root.bind("2", lambda event=None: self.record_response("-2"))
+        self.root.bind("3", lambda event=None: self.record_response("-1"))
+        self.root.bind("4", lambda event=None: self.record_response("0"))
+        self.root.bind("5", lambda event=None: self.record_response("1"))
+        self.root.bind("6", lambda event=None: self.record_response("2"))
+        self.root.bind("7", lambda event=None: self.record_response("3"))
 
         self.show_next_image()
 
