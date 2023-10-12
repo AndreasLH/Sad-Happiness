@@ -21,7 +21,7 @@ for i, person in enumerate(participants):
     ax[i].set_xlabel('Value')
     ax[i].set_ylabel('Counts')
 
-bins = np.histogram(data,bins=5)
+bins = np.histogram(df['Response'],bins=5)
 loc = [-2,-1,0,1,2]
 
 # Plot
