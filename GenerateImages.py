@@ -4,7 +4,7 @@ import pickle as pkl
 import os
 np.random.seed(23)
 # Load model
-with open("linear_regression_model.pkl", "rb") as f:
+with open("cache/linear_regression_model.pkl", "rb") as f:
     model = pkl.load(f)
 
 print('Generating images...')
@@ -32,11 +32,11 @@ def generate_images(model,ratings):
 ratings_generate = [-3,-2,-1,0,1,2,3]
 synthetic_images = generate_images(model,ratings_generate)
 
-components = np.load("components.npy")
-selected_features = np.load("selected_features.npy")
+components = np.load("cache/components.npy")
+selected_features = np.load("cache/selected_features.npy")
 selected_features = np.concatenate((selected_features,np.zeros(933-len(selected_features),dtype=bool)))
 loading_matrix = components[selected_features,:]
-mean_image = np.load("mean.npy")
+mean_image = np.load("cache/mean.npy")
 
 im_size = (254,187)
 
@@ -85,11 +85,11 @@ def generate_dataset(scale_factor=0.2):
     synthetic_images = generate_images(model,ratings_generate)
 
     # prepare the model
-    components = np.load("components.npy")
-    selected_features = np.load("selected_features.npy")
+    components = np.load("cache/components.npy")
+    selected_features = np.load("cache/selected_features.npy")
     selected_features = np.concatenate((selected_features,np.zeros(933-len(selected_features),dtype=bool)))
     loading_matrix = components[selected_features,:]
-    mean_image = np.load("mean.npy")
+    mean_image = np.load("cache/mean.npy")
     print("Model loaded")
     
     # save the images

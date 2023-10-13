@@ -6,10 +6,10 @@ import sklearn.feature_selection
 import pickle as pkl
 
 # Linear Regression using forward selection
-PCs = np.load("PCs.npy")
+PCs = np.load("cache/PCs.npy")
 PCs = PCs[:,:25]
 # Load ratings
-poll_responses = pd.read_csv("poll_responses.csv")
+poll_responses = pd.read_csv("cache/poll_responses.csv")
 # Find Respons for all images with same image id and take the mean
 ratings = poll_responses.groupby("Image")["Response"].mean()
 
@@ -24,7 +24,7 @@ print('number of selected features:',sum(selected_features))
 model = model.fit(PCs[:, selected_features], ratings)
 
 # Save selected features
-np.save("selected_features.npy", selected_features)
+np.save("cache/selected_features.npy", selected_features)
 # Save model
-with open("linear_regression_model.pkl", "wb") as f:
+with open("cache/linear_regression_model.pkl", "wb") as f:
     pkl.dump(model, f)

@@ -34,10 +34,10 @@ def generate_images(model,ratings):
 
 
 # Linear Regression
-PCs = np.load("PCs.npy")
+PCs = np.load("cache/PCs.npy")
 PCs = PCs[:,first_component_to_use:last_component_to_use]
 # Load ratings
-poll_responses = pd.read_csv("poll_responses.csv")
+poll_responses = pd.read_csv("cache/poll_responses.csv")
 # Find Respons for all images with same image id and take the mean
 ratings = poll_responses.groupby("Image")["Response"].mean()
 
@@ -48,9 +48,9 @@ model = model.fit(PCs, ratings)
 ratings_generate = [-10,-2,-1,0,1,2,10]
 synthetic_images = generate_images(model,ratings_generate)
 
-components = np.load("components.npy")
+components = np.load("cache/components.npy")
 loading_matrix = components[first_component_to_use:last_component_to_use,:]
-mean_image = np.load("mean.npy")
+mean_image = np.load("cache/mean.npy")
 
 im_size = (254,187)
 

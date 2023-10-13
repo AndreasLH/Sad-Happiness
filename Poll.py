@@ -74,7 +74,7 @@ class PollApp:
         self.show_next_image()
 
     def create_dataframe(self):
-        self.csv_filename = "poll_responses.csv"
+        self.csv_filename = "cache/poll_responses.csv"
         # Create a new DataFrame or load an existing one if the file already exists
         if os.path.exists(self.csv_filename):
             self.df = pd.read_csv(self.csv_filename)
