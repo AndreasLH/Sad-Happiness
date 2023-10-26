@@ -10,6 +10,7 @@ __pycache__/
 dataset2/
 *.py[cod]
 *$py.class
+*.pdf
 
 # C extensions
 *.so
