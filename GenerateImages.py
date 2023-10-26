@@ -103,6 +103,27 @@ def generate_dataset(scale_factor=0.2):
         plt.axis("off")
         plt.tight_layout()
         plt.savefig(f"dataset2/image_{i-3}.png")
-                    
+
+def show_components():
+    im_size = (254,187)
+    n_components = 12
+    PCs = [1,2,7,9,10,16,18,19,20,21,23,24]
+    components = np.load("cache/components.npy")
+    selected_features = np.load("cache/selected_features.npy")
+    selected_features = np.concatenate((selected_features,np.zeros(933-len(selected_features),dtype=bool)))
+    loading_matrix = components[selected_features,:]
+    # 2 x 6 subplot
+    plt.figure(figsize=(im_size[1]*3/im_size[0]*6, im_size[0]*3/im_size[0]*2), )
+    for i in range(n_components):
+        plt.subplot(2, 6, i + 1)
+        plt.imshow(loading_matrix[i].reshape(im_size), cmap='gray')
+        plt.title(f'PC {PCs[i]}')
+        plt.axis('off')
+    plt.tight_layout()
+    plt.show()
+
+
 if __name__ == "__main__":
     generate_dataset()
+    show_components()
+    
