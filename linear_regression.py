@@ -4,6 +4,7 @@ np.random.seed(21)
 import sklearn.linear_model
 import sklearn.feature_selection
 import pickle as pkl
+import matplotlib.pyplot as plt
 
 # Linear Regression using forward selection
 PCs = np.load("cache/PCs.npy")
@@ -22,6 +23,17 @@ selected_features = forward_selection.fit(PCs,ratings).support_
 print('number of selected features:',sum(selected_features))
 
 model = model.fit(PCs[:, selected_features], ratings)
+
+def mask_to_idx(mask):
+    return np.where(mask)[0]
+
+plt.figure(figsize=(12, 4))
+plt.bar(mask_to_idx(selected_features), model.coef_)
+plt.xticks(mask_to_idx(selected_features))
+plt.title("Coefficients of selected features")
+plt.xlabel("Feature index")
+plt.ylabel("Coefficient")
+plt.savefig('Images/linear_regression.png',dpi=300, bbox_inches='tight')
 
 # Save selected features
 np.save("cache/selected_features.npy", selected_features)

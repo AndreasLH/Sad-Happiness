@@ -26,7 +26,7 @@ loc = [-2,-1,0,1,2]
 
 # Plot
 ax[-1].bar(loc,bins[0])
-ax[-1].set_title('Mean Rating Distribution')
+ax[-1].set_title('Pooled Rating Distribution')
 ax[-1].set_xlabel('Value')
 ax[-1].set_ylabel('Counts')
 plt.tight_layout()
